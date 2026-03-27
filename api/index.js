@@ -3,10 +3,12 @@ import express from "express"
 import indexRoutes from "./routes/index.routes.js"
 import loginRoutes from "./routes/login.routes.js"
 import userRoutes from "./routes/users.routes.js"
+import cors from "cors"
 
 const app = express()
 
 app.use(express.json())
+app.use(cors())
 app.use(indexRoutes)
 app.use(loginRoutes)
 app.use(userRoutes)
