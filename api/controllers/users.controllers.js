@@ -58,3 +58,31 @@ export const deleteUser = async (req, res) => {
         res.status(500).json({ message: error.message })
     }
 }
+
+export const getGameUser = async (req, res) => {
+    const sql = db_connect()
+    const { id } = req.params
+    try {
+        const result = await sql.query("SELECT * FROM users WHERE id = $1", [id])
+        if (result.rows.length === 0) return res.status(404).json({ message: "User not found" })
+        res.json(result.rows[0])
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+}
+
+// PUT guarda puntos al terminar nivel
+export const updateUserPoints = async (req, res) => {
+    const sql = db_connect()
+    const { id } = req.params
+    const { age } = req.body   // Unity manda "age" como puntos
+    try {
+        const result = await sql.query(
+            "UPDATE users SET age = $1 WHERE id = $2 RETURNING *",
+            [age, id]
+        )
+        res.json(result.rows[0])
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+}

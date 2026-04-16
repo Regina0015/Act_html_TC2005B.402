@@ -15,6 +15,8 @@ export const login = async (req, res) => {
         const storedPassword = result.rows[0].password
         const salt = storedPassword.substring(0, process.env.SALT_SIZE)
         const hashed = hash(password, salt)
+        const username = result.rows[0].username   // el nombre de usuario que inició sesión
+        // window.location.href = `tu-juego.html?username=${username}`
         if (hashed === storedPassword.substring(process.env.SALT_SIZE)) {
             res.status(200).json({ isLogin: true, user: result.rows[0] }) 
         } else {
