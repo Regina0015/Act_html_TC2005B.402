@@ -63,10 +63,19 @@ export const deleteUser = async (req, res) => {
 export const getGameUser = async (req, res) => {
     const sql = db_connect()
     const { id } = req.params
+
     try {
-        const result = await sql.query("SELECT * FROM users WHERE user_id = $1", [id])
-        if (result.rows.length === 0) return res.status(404).json({ message: "User not found" })
+        const result = await sql.query(
+            "SELECT * FROM users WHERE username = $1",
+            [id]
+        )
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: "User not found" })
+        }
+
         const u = result.rows[0]
+
         res.json({
             id: u.user_id,
             name: u.first_name + " " + u.last_name,

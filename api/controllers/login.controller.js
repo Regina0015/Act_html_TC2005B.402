@@ -16,11 +16,11 @@ export const login = async (req, res) => {
             return res.status(404).json({ isLogin: false, user: {} })
         }
         const storedPassword = result.rows[0].password
-        const salt = storedPassword.substring(0, process.env.SALT_SIZE)
-        const hashed = hash(password, salt)
+        const salt = storedPassword.substring(0, parseInt(process.env.SALT_SIZE))
+const hashed = hash(password, salt)
         //const username = result.rows[0].username   // el nombre de usuario que inició sesión
         // window.location.href = `tu-juego.html?username=${username}`
-        if (hashed === storedPassword.substring(process.env.SALT_SIZE)) {
+        if (hashed === storedPassword.substring(parseInt(process.env.SALT_SIZE))) {
             res.status(200).json({ isLogin: true, user: result.rows[0] }) 
         } else {
             res.status(401).json({ isLogin: false, user: {} })

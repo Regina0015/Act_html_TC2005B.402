@@ -75,11 +75,9 @@
         </div>
     </nav>
 
-    <!-- Juego -->
-    <div id="game-container">
-        <iframe src="./game/index.html"></iframe>
-    </div>
-
+<div id="game-container">
+    <canvas id="unity-canvas" style="width:100%; height:100%;"></canvas>
+</div>
     <!-- Pantalla de victoria -->
     <div id="pantalla-victoria" style="
         display: none;
@@ -108,11 +106,38 @@
     </div>
 
     <script>
-        function juegoTerminado() {
-            const pantalla = document.getElementById("pantalla-victoria");
-            pantalla.style.display = "flex";
-        }
-    </script>
+
+    const params = new URLSearchParams(window.location.search);
+    window.gameUsername = params.get("id") || "Default";
+
+    var buildUrl = "game/Build";
+    var loaderUrl = buildUrl + "/game.loader.js";
+    var config = {
+        dataUrl: buildUrl + "/game.data",
+        frameworkUrl: buildUrl + "/game.framework.js",
+        codeUrl: buildUrl + "/game.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "game",
+        productVersion: "0.1",
+    };
+
+    var script = document.createElement("script");
+    script.src = loaderUrl;
+    script.onload = () => {
+        createUnityInstance(document.querySelector("#unity-canvas"), config);
+    };
+    document.body.appendChild(script);
+
+    function GetUsernameFromPage() {
+        return window.gameUsername;
+    }
+
+    function juegoTerminado() {
+        document.getElementById("pantalla-victoria").style.display = "flex";
+    }
+</script>
+
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
