@@ -4,4 +4,4 @@ Aplicación web integrada con Unity que permite autenticación de usuarios y sin
 
 ## Demo del proyecto
 
-[![Ver demo](https://youtu.be/s6dWfSF7bbM)
+[![Ver demo](https://img.youtube.com/vi/s6dWfSF7bbM/0.jpg)](https://youtu.be/s6dWfSF7bbM)
