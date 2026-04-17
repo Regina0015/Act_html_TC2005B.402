@@ -3,8 +3,11 @@ import { hash } from "../utils/hash.js"
 
 export const login = async (req, res) => {
     const sql = db_connect()
-    const { username, password } = req.body
+    
     try {
+        const { username, password } = req.body
+    console.log(req.body)
+    console.log("Username:", username)
         const text = "SELECT * FROM users WHERE username = $1"
         const values = [username]
         const result = await sql.query(text, values)
@@ -15,7 +18,7 @@ export const login = async (req, res) => {
         const storedPassword = result.rows[0].password
         const salt = storedPassword.substring(0, process.env.SALT_SIZE)
         const hashed = hash(password, salt)
-        const username = result.rows[0].username   // el nombre de usuario que inició sesión
+        //const username = result.rows[0].username   // el nombre de usuario que inició sesión
         // window.location.href = `tu-juego.html?username=${username}`
         if (hashed === storedPassword.substring(process.env.SALT_SIZE)) {
             res.status(200).json({ isLogin: true, user: result.rows[0] }) 

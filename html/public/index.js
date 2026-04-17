@@ -19,8 +19,8 @@ async function evento(){
 
     if(data.isLogin == true){
         sessionStorage.setItem("validarLogin", true)
-        sessionStorage.setItem("id", data.user.id)
-        window.location = "./profile.html"
+        sessionStorage.setItem("id", data.user.username)
+        window.location = "./game.html?id=" + data.user.username
     }else{
         alert("Creedneciales Incorrectas")
     }
